@@ -43,7 +43,6 @@ require("packer").startup(function(use)
   use "tpope/vim-tbone"
   use "tpope/vim-eunuch"
   use "tpope/vim-unimpaired"
-  -- use 'tpope/vim-vinegar'
   use "tpope/vim-repeat"
   use "chaoren/vim-wordmotion"
   use "slim-template/vim-slim"
@@ -164,36 +163,7 @@ require("packer").startup(function(use)
       { "nvim-lua/plenary.nvim" },
     },
     config = function()
-      local telescope = require "telescope"
-      telescope.setup {
-        pickers = {
-          find_files = {
-            disable_devicons = true,
-            previewer = false,
-          },
-          buffers = {
-            disable_devicons = true,
-            previewer = false,
-          },
-          colorscheme = {
-            enable_preview = true,
-          },
-        },
-        defaults = {
-          vimgrep_arguments = {
-            "rg",
-            "--color=never",
-            "--no-heading",
-            "--with-filename",
-            "--line-number",
-            "--column",
-            "--smart-case",
-          },
-          file_sorter = require("telescope.sorters").get_fuzzy_file,
-          file_ignore_patterns = {},
-          generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
-        },
-      }
+      require "plugins.telescope"
     end,
     setup = function() end,
   }
