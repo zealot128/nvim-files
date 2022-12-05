@@ -15,7 +15,8 @@ require("packer").startup(function(use)
   use { -- Theme
     "RRethy/nvim-base16",
     config = function()
-      vim.cmd "colorscheme base16-ayu-dark"
+      --vim.cmd "colorscheme base16-ayu-dark"
+      vim.cmd "colorscheme base16-da-one-ocean"
     end,
   }
 
