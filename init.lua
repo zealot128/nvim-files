@@ -12,6 +12,10 @@ vim.opt.cmdheight = 1
 vim.opt.smartindent = true
 vim.opt.foldlevelstart = 5
 
+-- set signcolumn=yes
+vim.opt.signcolumn = "yes"
+
+
 vim.opt.mouse = ""
 
 

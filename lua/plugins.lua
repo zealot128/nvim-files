@@ -16,13 +16,26 @@ require("packer").startup(function(use)
     "RRethy/nvim-base16",
     config = function()
       --vim.cmd "colorscheme base16-ayu-dark"
-      vim.cmd "colorscheme base16-da-one-ocean"
+      vim.cmd "colorscheme base16-tomorrow-night-eighties"
+    end,
+  }
+  use "rmehri01/onenord.nvim"
+  use "cpea2506/one_monokai.nvim"
+  use "lourenci/github-colors"
+  use { "projekt0n/github-nvim-theme" }
+
+  -- file explorer
+  use "tpope/vim-vinegar"
+  use {
+    "prichrd/netrw.nvim",
+    config = function()
+      require("netrw").setup {}
     end,
   }
 
-  use "tpope/vim-vinegar"
   use "wsdjeg/vim-fetch"
   use "tpope/vim-surround"
+
   use {
     "jremmen/vim-ripgrep",
   }
@@ -147,6 +160,16 @@ require("packer").startup(function(use)
   use {
     "sbdchd/neoformat",
     cmd = "Neoformat",
+    setup = function()
+      -- vim.g.neoformat_verbose = 1
+      -- use bundle exec rubocop
+      vim.g.neoformat_ruby_rubocop = {
+        exe = 'bundle',
+        args = { 'exec rubocop --auto-correct', '--stdin', '"%:p"', '2>/dev/null', '|', 'sed "1,/^====================$/d"' },
+        stdin = 1,
+        stderr = 1
+      }
+    end,
   }
   use {
     "terrortylor/nvim-comment",

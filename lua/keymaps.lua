@@ -92,6 +92,7 @@ function CopyRealPath()
 end
 map("n", "<leader>rr", "<cmd>lua CopyRspecForLine()<CR>")
 map("n", "<leader>rp", "<cmd>lua CopyRealPath()<CR>")
+map("n", "<leader>ro", ":Rooter<CR>")
 map("n", "<F3>", ":nohls<CR>")
 map("n", "<F2>", ":set invpaste paste?<CR>")
 -- map("n", "<F7>", ":ALEFix<CR>")

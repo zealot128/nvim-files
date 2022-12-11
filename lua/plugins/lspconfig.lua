@@ -69,10 +69,33 @@ lspconfig.ansiblels.setup{
   on_attach = on_attach,
   flags = lsp_flags,
 }
+
+local util = require 'lspconfig.util'
+local function get_typescript_server_path(root_dir)
+
+  local found_ts = ''
+  local function check_dir(path)
+    found_ts =  util.path.join(path, 'node_modules', 'typescript', 'lib')
+    if util.path.exists(found_ts) then
+      return path
+    end
+  end
+  if util.search_ancestors(root_dir, check_dir) then
+    return found_ts
+  end
+end
+
 lspconfig.volar.setup{
   filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'},
   on_attach = on_attach,
   flags = lsp_flags,
+  on_new_config = function(new_config, new_root_dir)
+    local tsdk = get_typescript_server_path(new_root_dir)
+    if tsdk then
+      print("volar using local tsdk: " .. new_config.init_options.typescript.tsdk)
+      new_config.init_options.typescript.tsdk = tsdk
+    end
+  end,
 }
 lspconfig.solargraph.setup{
   on_attach = on_attach,
@@ -82,3 +105,12 @@ lspconfig.solargraph.setup{
   on_attach = on_attach,
   flags = lsp_flags,
 }
+lspconfig.tsserver.setup{
+  on_attach = on_attach,
+  flags = lsp_flags,
+}
+lspconfig.graphql.setup{
+  on_attach = on_attach,
+  flags = lsp_flags,
+}
+
