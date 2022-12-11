@@ -187,4 +187,5 @@ require("packer").startup(function(use)
   use {
     "tpope/vim-fugitive",
   }
+  use "martineausimon/nvim-lilypond-suite"
 end)
