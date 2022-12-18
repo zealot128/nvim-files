@@ -20,17 +20,36 @@ require("packer").startup(function(use)
     end,
   }
 
-  use { -- Theme
-    "RRethy/nvim-base16",
+  -- Good: duskfox OceanicNext icy
+
+ -- <Theme> ----------------------------------------
+  -- use {
+  --   "RRethy/nvim-base16",
+  --   config = function()
+  --     --vim.cmd "colorscheme base16-ayu-dark"
+  --     vim.cmd "colorscheme base16-tomorrow-night-eighties"
+  --   end,
+  -- }
+  --use "cpea2506/one_monokai.nvim"
+  --use "lourenci/github-colors"
+  --use "projekt0n/github-nvim-theme"
+  --use "shaunsingh/nord.nvim"
+  use {
+    "mhartington/oceanic-next",
     config = function()
-      --vim.cmd "colorscheme base16-ayu-dark"
-      vim.cmd "colorscheme base16-tomorrow-night-eighties"
+      vim.cmd "colorscheme OceanicNext"
     end,
   }
-  use "rmehri01/onenord.nvim"
-  use "cpea2506/one_monokai.nvim"
-  use "lourenci/github-colors"
-  use { "projekt0n/github-nvim-theme" }
+
+  --use "folke/tokyonight.nvim"
+  use "EdenEast/nightfox.nvim"
+  use {
+    "elianiva/icy.nvim",
+    -- config = function()
+    --   vim.cmd "colorscheme icy"
+    -- end,
+  }
+ -- </Theme> ----------------------------------------
 
   -- file explorer
   use "tpope/vim-vinegar"

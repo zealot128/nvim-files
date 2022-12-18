@@ -10,6 +10,7 @@ vim.opt.wrap = true
 vim.opt.includeexpr = [[substitute(v:fname, '^[/\~@]\+', '', '')]]
 vim.opt.cmdheight = 1
 vim.opt.smartindent = true
+vim.opt.termguicolors = true
 vim.opt.foldlevelstart = 5
 vim.g.mapleader = "\\"
 vim.opt.wildmenu = true
