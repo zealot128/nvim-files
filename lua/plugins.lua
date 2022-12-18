@@ -34,20 +34,15 @@ require("packer").startup(function(use)
   --use "lourenci/github-colors"
   --use "projekt0n/github-nvim-theme"
   --use "shaunsingh/nord.nvim"
+  use 'navarasu/onedark.nvim'
+  --use "folke/tokyonight.nvim"
+  use "EdenEast/nightfox.nvim"
+  use "elianiva/icy.nvim"
   use {
     "mhartington/oceanic-next",
     config = function()
       vim.cmd "colorscheme OceanicNext"
     end,
-  }
-
-  --use "folke/tokyonight.nvim"
-  use "EdenEast/nightfox.nvim"
-  use {
-    "elianiva/icy.nvim",
-    -- config = function()
-    --   vim.cmd "colorscheme icy"
-    -- end,
   }
  -- </Theme> ----------------------------------------
 
@@ -180,9 +175,31 @@ require("packer").startup(function(use)
   use {  -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
     config = function()
+      -- require("indent_blankline").setup {
+      --   char = '┊',
+      -- }
+      vim.opt.termguicolors = true
+      vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75]]
+      vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B]]
+      vim.cmd [[highlight IndentBlanklineIndent3 guifg=#98C379]]
+      vim.cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2]]
+      vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF]]
+      vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD]]
+
+      vim.keymap.set("n", "<leader>ig", ":IndentBlanklineToggle<CR>", { noremap = true, desc = "Toggle indent guides" })
+
       require("indent_blankline").setup {
-        char = '┊',
         show_trailing_blankline_indent = false,
+        -- show_current_context_start = true,
+        -- show_current_context = true,
+        char_highlight_list = {
+          "IndentBlanklineIndent1",
+          "IndentBlanklineIndent2",
+          "IndentBlanklineIndent3",
+          "IndentBlanklineIndent4",
+          "IndentBlanklineIndent5",
+          "IndentBlanklineIndent6",
+        },
       }
     end,
   }
@@ -235,6 +252,7 @@ require("packer").startup(function(use)
       vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = 'Telescope: [S]earch [D]iagnostics' })
       -- See `:help telescope.builtin`
       vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = 'Telescope: [?] Find recently opened files' })
+      vim.keymap.set('n', '<leader>km', require('telescope.builtin').keymaps, { desc = 'Telescope keymaps: [K]ey[m]aps [?]' })
       vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = 'Telescope: [ ] Find existing buffers' })
       vim.keymap.set('n', '<leader>/', function()
         -- You can pass additional configuration to telescope to change theme, layout, etc.
