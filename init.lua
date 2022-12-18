@@ -11,13 +11,17 @@ vim.opt.includeexpr = [[substitute(v:fname, '^[/\~@]\+', '', '')]]
 vim.opt.cmdheight = 1
 vim.opt.smartindent = true
 vim.opt.foldlevelstart = 5
+vim.g.mapleader = "\\"
+vim.opt.wildmenu = true
+vim.opt.wildmode = "list:longest,full"
+vim.opt.gdefault = true
+vim.opt.wildignorecase = true
 
 -- set signcolumn=yes
 vim.opt.signcolumn = "yes"
 
 
 vim.opt.mouse = ""
-
 
 require("plugins")
 require("keymaps")

@@ -84,8 +84,16 @@ vim.api.nvim_exec([[
 vim.api.nvim_exec([[
   iabbrev stimc import { Controller } from "stimulus"<CR><CR>export default class extends Controller {<CR>static values = {}<CR>static targets = []<CR><CR>connect() {<CR>}<CR>}
 ]], true)
-vim.cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false}'
-vim.cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false}'
 
-vim.cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false}'
-vim.cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false}'
+
+-- [[ Highlight on yank ]]
+-- See `:help vim.highlight.on_yank()`
+local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+vim.api.nvim_create_autocmd('TextYankPost', {
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+  group = highlight_group,
+  pattern = '*',
+})
+

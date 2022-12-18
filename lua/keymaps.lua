@@ -1,78 +1,24 @@
-local map = function(mode, keys, cmd, opt)
-   local options = { noremap = true, silent = true }
-   if opt then
-      options = vim.tbl_extend("force", options, opt)
-   end
-
-   -- all valid modes allowed for mappings
-   -- :h map-modes
-   local valid_modes = {
-      [""] = true,
-      ["n"] = true,
-      ["v"] = true,
-      ["s"] = true,
-      ["x"] = true,
-      ["o"] = true,
-      ["!"] = true,
-      ["i"] = true,
-      ["l"] = true,
-      ["c"] = true,
-      ["t"] = true,
-   }
-
-   -- helper function for M.map
-   -- can gives multiple modes and keys
-   local function map_wrapper(mode, lhs, rhs, options)
-      if type(lhs) == "table" then
-         for _, key in ipairs(lhs) do
-            map_wrapper(mode, key, rhs, options)
-         end
-      else
-         if type(mode) == "table" then
-            for _, m in ipairs(mode) do
-               map_wrapper(m, lhs, rhs, options)
-            end
-         else
-            if valid_modes[mode] and lhs and rhs then
-               vim.api.nvim_set_keymap(mode, lhs, rhs, options)
-            else
-               mode, lhs, rhs = mode or "", lhs or "", rhs or ""
-               print("Cannot set mapping [ mode = '" .. mode .. "' | key = '" .. lhs .. "' | cmd = '" .. rhs .. "' ]")
-            end
-         end
-      end
-   end
-
-   map_wrapper(mode, keys, cmd, options)
-end
-
-vim.g.mapleader = "\\"
-vim.opt.wildignorecase = true
-vim.opt.wildmenu = true
-vim.opt.wildmode = "list:longest,full"
-vim.opt.gdefault = true
-vim.opt.wildignorecase = true
 -- Save on enter
 vim.api.nvim_exec(
 [[
   nnoremap <silent><expr> <CR> &buftype is# '' ? ":w\<CR>" : "\<CR>"
 ]], false)
 
-map("n", "<leader>fm", ":Neoformat <CR>")
-map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>'")
-map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>")
+vim.keymap.set('n', '<leader>fm', ':Neoformat<CR>')
+vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = '[LSP]: Open [C]ode [A]ction' })
+vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = '[LSP]: Rename item under cursor' })
 
-function openDirOfFile()
+local function openDirOfFile()
    local file = vim.fn.resolve(vim.fn.expand "%:h")
    local cmd = ":e " .. file
    print(cmd)
 
    vim.cmd(cmd)
 end
-map("n", "-", [[<cmd>lua openDirOfFile()<CR>]])
+vim.keymap.set('n', '-', openDirOfFile, { desc = 'Open files directory' })
 
 
-function CopyRspecForLine()
+local function CopyRspecForLine()
    local row = vim.fn.line "."
    local file = vim.fn.expand "%"
    local testcommand = "R " .. file .. ":" .. row
@@ -82,7 +28,7 @@ function CopyRspecForLine()
    return testcommand
 end
 
-function CopyRealPath()
+local function CopyRealPath()
    local file = vim.fn.resolve(vim.fn.expand "%:p")
    local testcommand = "echo " .. file
    local tmuxcmd = testcommand .. " | tmux loadb -"
@@ -90,14 +36,16 @@ function CopyRealPath()
    local _error = vim.fn.system(tmuxcmd)
    return testcommand
 end
-map("n", "<leader>rr", "<cmd>lua CopyRspecForLine()<CR>")
-map("n", "<leader>rp", "<cmd>lua CopyRealPath()<CR>")
-map("n", "<leader>ro", ":Rooter<CR>")
-map("n", "<F3>", ":nohls<CR>")
-map("n", "<F2>", ":set invpaste paste?<CR>")
--- map("n", "<F7>", ":ALEFix<CR>")
-map("n", "<C-f>", [[:Telescope find_files<CR>]])
-map("n", "<C-p>", [[:Telescope find_files<CR>]])
-map("n", "<C-b>", [[:Telescope buffers<CR>]])
+vim.keymap.set('n', '<leader>rr', CopyRspecForLine, { desc = 'Copy [R]spec with `R` spring exec' })
+vim.keymap.set('n', '<leader>rp', CopyRealPath, { desc = 'Copy [R]eal [P]ath of current file (real-path)' })
 
-map("n", "<Esc>", ":noh <CR>")
+-- map("n", "<F3>", ":nohls<CR>")
+-- map("n", "<F2>", ":set invpaste paste?<CR>")
+-- map("n", "<F7>", ":ALEFix<CR>")
+vim.keymap.set('n', '<Esc>', ":noh <CR>", { desc = 'Clear search highlights' })
+
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
+vim.keymap.set('n', '<leader>ff', vim.lsp.buf.formatting, { desc = '[LSP]: Format buffer' })

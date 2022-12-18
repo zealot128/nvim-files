@@ -1,3 +1,11 @@
+local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
+local is_bootstrap = false
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+  is_bootstrap = true
+  vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
+  vim.cmd [[packadd packer.nvim]]
+end
+
 require("packer").startup(function(use)
   use "wbthomason/packer.nvim" -- Package manager
 
@@ -150,6 +158,15 @@ require("packer").startup(function(use)
   use {
     "kyazdani42/nvim-web-devicons",
   }
+  use {  -- Add indentation guides even on blank lines
+    'lukas-reineke/indent-blankline.nvim',
+    config = function()
+      require("indent_blankline").setup {
+        char = '┊',
+        show_trailing_blankline_indent = false,
+      }
+    end,
+  }
   use {
     "feline-nvim/feline.nvim",
     after = "nvim-web-devicons",
@@ -188,8 +205,28 @@ require("packer").startup(function(use)
     },
     config = function()
       require "plugins.telescope"
+      vim.keymap.set("n", "<C-f>", require("telescope.builtin").find_files, { noremap = true, silent = true, desc = "Telescope: Find files" })
+      vim.keymap.set("n", "<C-p>", require("telescope.builtin").find_files, { noremap = true, silent = true, desc = "Telescope: Find Files" })
+      vim.keymap.set("n", "<C-b>", require('telescope.builtin').buffers, { desc = "Telescope: Find buffers" })
+
+      vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = 'Telescope: [S]earch [F]iles' })
+      vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = 'Telescope: [S]earch [H]elp' })
+      vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = 'Telescope: [S]earch current [W]ord' })
+      vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = 'Telescope: [S]earch by [G]rep' })
+      vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = 'Telescope: [S]earch [D]iagnostics' })
+      -- See `:help telescope.builtin`
+      vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = 'Telescope: [?] Find recently opened files' })
+      vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = 'Telescope: [ ] Find existing buffers' })
+      vim.keymap.set('n', '<leader>/', function()
+        -- You can pass additional configuration to telescope to change theme, layout, etc.
+        require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+          winblend = 10,
+          previewer = false,
+        })
+      end, { desc = 'Telescope: [/] Fuzzily search in current buffer]' })
     end,
-    setup = function() end,
+    setup = function()
+    end,
   }
   use {
     "nvim-treesitter/nvim-treesitter",
@@ -198,6 +235,10 @@ require("packer").startup(function(use)
       require "plugins.treesitter"
     end,
   }
+  use { -- Additional text objects via treesitter
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    after = 'nvim-treesitter',
+  }
   use {
     "airblade/vim-rooter",
     config = function()
@@ -205,10 +246,38 @@ require("packer").startup(function(use)
         { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", "ansible.cfg", "*.gemspec" }
       -- Start :Rooter to change Root dir between projects
       vim.g.rooter_manual_only = 1
+      vim.keymap.set("n", "<leader>cd", ":Rooter<CR>", { noremap = true, silent = true, desc = "Activate Rooter - move Root directory with buffer" })
     end,
   }
   use {
     "tpope/vim-fugitive",
+    config = function()
+      vim.keymap.set("n", "<leader>dif", ":Gdiffsplit<CR>", { noremap = true, silent = true, desc = "Git: Diff split" })
+    end
+
   }
-  use "martineausimon/nvim-lilypond-suite"
+  use {
+    "martineausimon/nvim-lilypond-suite",
+    ft = { "lilypond", "ly" },
+  }
+
+  if is_bootstrap then
+    require('packer').sync()
+  end
 end)
+
+if is_bootstrap then
+  print '=================================='
+  print '    Plugins are being installed'
+  print '    Wait until Packer completes,'
+  print '       then restart nvim'
+  print '=================================='
+  return
+end
+
+local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
+vim.api.nvim_create_autocmd('BufWritePost', {
+  command = 'source <afile> | PackerCompile',
+  group = packer_group,
+  pattern = vim.fn.expand '$MYVIMRC',
+})
