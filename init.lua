@@ -13,6 +13,7 @@ vim.opt.smartindent = true
 vim.opt.termguicolors = true
 vim.opt.foldlevelstart = 5
 vim.g.mapleader = "\\"
+vim.g.mapleader = " "
 vim.opt.wildmenu = true
 vim.opt.wildmode = "list:longest,full"
 vim.opt.gdefault = true

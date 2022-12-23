@@ -21,7 +21,6 @@ require("packer").startup(function(use)
   }
 
   -- Good: duskfox OceanicNext icy
-
  -- <Theme> ----------------------------------------
   -- use {
   --   "RRethy/nvim-base16",
@@ -35,13 +34,17 @@ require("packer").startup(function(use)
   --use "projekt0n/github-nvim-theme"
   --use "shaunsingh/nord.nvim"
   use 'navarasu/onedark.nvim'
-  --use "folke/tokyonight.nvim"
+  use "folke/tokyonight.nvim"
   use "EdenEast/nightfox.nvim"
   use "elianiva/icy.nvim"
+  use "marko-cerovac/material.nvim"
+  use 'themercorp/themer.lua'
+  use "mhartington/oceanic-next"
   use {
-    "mhartington/oceanic-next",
+    "jayden-chan/base46.nvim" ,
     config = function()
-      vim.cmd "colorscheme OceanicNext"
+      --require("base46").load_theme { theme = "catppucin", base = "base46" }
+      require("base46").load_theme { theme = "pasteldark", base = "base46" }
     end,
   }
  -- </Theme> ----------------------------------------
@@ -76,7 +79,13 @@ require("packer").startup(function(use)
     end,
   }
 
-  use "tpope/vim-tbone"
+  use {
+    "tpope/vim-tbone",
+    config = function()
+      vim.keymap.set("v", "<leader>ty", ":Tyank<CR>", { desc = "tmux: Yank selection to clipboard" })
+      vim.keymap.set("n", "<leader>tp", ":Tput<CR>", {  desc = "tmux: Paste from clipboard" })
+    end,
+  }
   use "tpope/vim-eunuch"
   use "tpope/vim-unimpaired"
   use "tpope/vim-repeat"
@@ -179,12 +188,6 @@ require("packer").startup(function(use)
       --   char = '┊',
       -- }
       vim.opt.termguicolors = true
-      vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75]]
-      vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B]]
-      vim.cmd [[highlight IndentBlanklineIndent3 guifg=#98C379]]
-      vim.cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2]]
-      vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF]]
-      vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD]]
 
       vim.keymap.set("n", "<leader>ig", ":IndentBlanklineToggle<CR>", { noremap = true, desc = "Toggle indent guides" })
 
@@ -318,3 +321,32 @@ vim.api.nvim_create_autocmd('BufWritePost', {
   group = packer_group,
   pattern = vim.fn.expand '$MYVIMRC',
 })
+
+local goodThemes = {
+  "themer_catppuccin",
+  "themer_javacafe",
+  "themer_sakura",
+  "themer_jellybeans",
+  -- "themer_monokai_pro",
+  "themer_nord",
+  "OceanicNext",
+}
+
+function RandomTheme()
+  vim.cmd("set background=dark")
+
+  math.randomseed(os.time())
+  local theme = goodThemes[math.random(#goodThemes)]
+  vim.cmd('colorscheme ' .. theme)
+  -- vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75]]
+  -- vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B]]
+  -- vim.cmd [[highlight IndentBlanklineIndent3 guifg=#98C379]]
+  -- vim.cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2]]
+  -- vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF]]
+  -- vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD]]
+end
+vim.api.nvim_create_user_command('RandomTheme', 'lua RandomTheme()', {})
+-- RandomTheme()
+-- vim.cmd('colorscheme themer_catppuccin')
+
+
