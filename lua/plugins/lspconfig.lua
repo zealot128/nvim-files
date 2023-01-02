@@ -1,6 +1,6 @@
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local opts = { noremap=true, silent=true }
+local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
@@ -14,7 +14,7 @@ local on_attach = function(client, bufnr)
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  local bufopts = { noremap = true, silent = true, buffer = bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
@@ -64,7 +64,7 @@ lspconfig.sumneko_lua.setup {
     },
   },
 }
-lspconfig.ansiblels.setup{
+lspconfig.ansiblels.setup {
   single_file_support = true,
   on_attach = on_attach,
   flags = lsp_flags,
@@ -73,43 +73,44 @@ lspconfig.ansiblels.setup{
 local util = require 'lspconfig.util'
 local function get_typescript_server_path(root_dir)
 
+  local global_ts = vim.fn.expand('$HOME') .. '/.npm/lib/node_modules/typescript/lib'
+
   local found_ts = ''
   local function check_dir(path)
-    found_ts =  util.path.join(path, 'node_modules', 'typescript', 'lib')
+    found_ts = util.path.join(path, 'node_modules', 'typescript', 'lib')
     if util.path.exists(found_ts) then
       return path
     end
   end
+
   if util.search_ancestors(root_dir, check_dir) then
     return found_ts
+  else
+    return global_ts
   end
 end
 
-lspconfig.volar.setup{
-  filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'},
+lspconfig.tsserver.setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
+}
+lspconfig.volar.setup {
+  filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
   on_attach = on_attach,
   flags = lsp_flags,
   on_new_config = function(new_config, new_root_dir)
-    local tsdk = get_typescript_server_path(new_root_dir)
-    if tsdk then
-      print("volar using local tsdk: " .. new_config.init_options.typescript.tsdk)
-      new_config.init_options.typescript.tsdk = tsdk
-    end
+    new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
   end,
 }
-lspconfig.solargraph.setup{
+lspconfig.solargraph.setup {
   on_attach = on_attach,
   flags = lsp_flags,
 }
-lspconfig.solargraph.setup{
+lspconfig.solargraph.setup {
   on_attach = on_attach,
   flags = lsp_flags,
 }
-lspconfig.tsserver.setup{
-  on_attach = on_attach,
-  flags = lsp_flags,
-}
-lspconfig.graphql.setup{
+lspconfig.graphql.setup {
   on_attach = on_attach,
   flags = lsp_flags,
 }
