@@ -47,7 +47,7 @@ require("packer").startup(function(use)
       require("base46").load_theme { theme = "pasteldark", base = "base46" }
     end,
   }
- -- </Theme> ----------------------------------------
+  -- </Theme> ----------------------------------------
 
   -- file explorer
   use "tpope/vim-vinegar"
@@ -89,6 +89,7 @@ require("packer").startup(function(use)
   use "tpope/vim-eunuch"
   use "tpope/vim-unimpaired"
   use "tpope/vim-repeat"
+  use "tpope/vim-bundler"
   use "chaoren/vim-wordmotion"
   use "slim-template/vim-slim"
   use {
@@ -191,18 +192,20 @@ require("packer").startup(function(use)
 
       vim.keymap.set("n", "<leader>ig", ":IndentBlanklineToggle<CR>", { noremap = true, desc = "Toggle indent guides" })
 
+      vim.cmd [[highlight IndentBlanklineIndent1 guibg=#1f1f1f gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent2 guibg=#1a1a1a gui=nocombine]]
+
       require("indent_blankline").setup {
-        show_trailing_blankline_indent = false,
-        -- show_current_context_start = true,
-        -- show_current_context = true,
+        char = "",
         char_highlight_list = {
           "IndentBlanklineIndent1",
           "IndentBlanklineIndent2",
-          "IndentBlanklineIndent3",
-          "IndentBlanklineIndent4",
-          "IndentBlanklineIndent5",
-          "IndentBlanklineIndent6",
         },
+        space_char_highlight_list = {
+          "IndentBlanklineIndent1",
+          "IndentBlanklineIndent2",
+        },
+        show_trailing_blankline_indent = false,
       }
     end,
   }
@@ -241,9 +244,11 @@ require("packer").startup(function(use)
         run = "make",
       },
       { "nvim-lua/plenary.nvim" },
+      { "debugloop/telescope-undo.nvim" },
     },
     config = function()
       require "plugins.telescope"
+      require("telescope").load_extension "undo"
       vim.keymap.set("n", "<C-f>", require("telescope.builtin").find_files, { noremap = true, silent = true, desc = "Telescope: Find files" })
       vim.keymap.set("n", "<C-p>", require("telescope.builtin").find_files, { noremap = true, silent = true, desc = "Telescope: Find Files" })
       vim.keymap.set("n", "<C-b>", require('telescope.builtin').buffers, { desc = "Telescope: Find buffers" })
@@ -257,6 +262,7 @@ require("packer").startup(function(use)
       vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = 'Telescope: [?] Find recently opened files' })
       vim.keymap.set('n', '<leader>km', require('telescope.builtin').keymaps, { desc = 'Telescope keymaps: [K]ey[m]aps [?]' })
       vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = 'Telescope: [ ] Find existing buffers' })
+      vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
       vim.keymap.set('n', '<leader>/', function()
         -- You can pass additional configuration to telescope to change theme, layout, etc.
         require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
@@ -275,9 +281,22 @@ require("packer").startup(function(use)
       require "plugins.treesitter"
     end,
   }
+  use {
+    "nvim-treesitter/playground",
+    after = "nvim-treesitter",
+    commands = "TSPlaygroundToggle",
+  }
   use { -- Additional text objects via treesitter
     'nvim-treesitter/nvim-treesitter-textobjects',
     after = 'nvim-treesitter',
+  }
+  use {
+    'ckolkey/ts-node-action',
+    after = 'nvim-treesitter',
+    config = function() -- Optional
+      require("ts-node-action").setup({})
+      vim.keymap.set({ "n" }, "T", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
+    end
   }
   use {
     "airblade/vim-rooter",

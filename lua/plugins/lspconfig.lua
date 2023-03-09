@@ -40,7 +40,7 @@ local lsp_flags = {
 
 local lspconfig = require('lspconfig')
 
-lspconfig.sumneko_lua.setup {
+lspconfig.lua_ls.setup {
   on_attach = on_attach,
   -- capabilities = capabilities,
   flags = lsp_flags,
@@ -105,10 +105,7 @@ lspconfig.volar.setup {
 lspconfig.solargraph.setup {
   on_attach = on_attach,
   flags = lsp_flags,
-}
-lspconfig.solargraph.setup {
-  on_attach = on_attach,
-  flags = lsp_flags,
+  cmd = { "bundle", "exec", "solargraph", "stdio" }
 }
 lspconfig.graphql.setup {
   on_attach = on_attach,
