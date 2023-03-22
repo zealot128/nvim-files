@@ -111,6 +111,10 @@ lspconfig.graphql.setup {
   on_attach = on_attach,
   flags = lsp_flags,
 }
+lspconfig.terraformls.setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
+}
 
 -- lspconfig["css-lsp"].setup{
 --   on_attach = on_attach,
