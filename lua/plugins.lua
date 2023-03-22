@@ -68,6 +68,9 @@ require("packer").startup(function(use)
     "github/copilot.vim",
     setup = function()
       vim.g.copilot_no_tab_map = true
+      if vim.env.LOGNAME == "swi" then
+        vim.g.copilot_node_command = "/home/local/PDC01/swi/.asdf/installs/nodejs/lts-gallium/bin/node"
+      end
     end,
     config = function()
       vim.api.nvim_exec(
