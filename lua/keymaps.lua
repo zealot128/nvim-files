@@ -49,6 +49,18 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
+
+-- cnoreabbrev W w in lua:
+vim.api.nvim_exec(
+[[
+  cnoreabbrev W w
+]], false)
+vim.api.nvim_exec(
+[[
+  cnoreabbrev E e
+]], false)
+
+
 -- check if vim.lsp.buf.formatting is available
 if vim.lsp.buf.formatting then
   vim.keymap.set('n', '<leader>ff', vim.lsp.buf.formatting, { desc = '[LSP]: Format buffer' })
