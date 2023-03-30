@@ -68,6 +68,10 @@ require("packer").startup(function(use)
     "github/copilot.vim",
     setup = function()
       vim.g.copilot_no_tab_map = true
+      vim.g.copilot_filetypes = {
+        yaml = 1,
+        ["yaml.ansible"] = 1
+      }
       if vim.env.LOGNAME == "swi" then
         vim.g.copilot_node_command = "/home/local/PDC01/swi/.asdf/installs/nodejs/lts-gallium/bin/node"
       end

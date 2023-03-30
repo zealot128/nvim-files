@@ -119,6 +119,22 @@ lspconfig.tailwindcss.setup {
   on_attach = on_attach,
   flags = lsp_flags,
 }
+lspconfig.ansiblels.setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
+  settings = {
+    ansible = {
+      ansible = {
+        path = "ansible",
+      },
+      ansibleLint = {
+        enabled = true,
+        path = "ansiblelint",
+        args = {},
+      },
+    },
+  },
+}
 
 -- lspconfig["css-lsp"].setup{
 --   on_attach = on_attach,

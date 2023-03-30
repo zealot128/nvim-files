@@ -7,6 +7,18 @@ vim.api.nvim_exec(
 ]],
    false
 )
+
+vim.api.nvim_exec(
+   [[
+  augroup ansible
+    au BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
+    au BufRead,BufNewFile */plays/*.yml set filetype=yaml.ansible
+    au BufRead,BufNewFile */roles/*.yml set filetype=yaml.ansible
+    au BufRead,BufNewFile */inventory/*.yml set filetype=yaml.ansible
+  augroup END
+]],
+   false
+)
 vim.api.nvim_exec(
    [[
   augroup jsopen
