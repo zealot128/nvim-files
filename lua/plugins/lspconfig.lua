@@ -72,7 +72,6 @@ lspconfig.ansiblels.setup {
 
 local util = require 'lspconfig.util'
 local function get_typescript_server_path(root_dir)
-
   local global_ts = vim.fn.expand('$HOME') .. '/.npm/lib/node_modules/typescript/lib'
 
   local found_ts = ''
@@ -111,6 +110,22 @@ lspconfig.graphql.setup {
   on_attach = on_attach,
   flags = lsp_flags,
 }
+lspconfig.grammarly.setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
+  settings = {
+    grammarly = {
+      config = {
+        documentDialect = "british",
+        documentDomain = "mail"
+      },
+      userWords = {
+        "brifter",
+        "brifters"
+      }
+    }
+  }
+}
 lspconfig.terraformls.setup {
   on_attach = on_attach,
   flags = lsp_flags,
@@ -118,6 +133,30 @@ lspconfig.terraformls.setup {
 lspconfig.tailwindcss.setup {
   on_attach = on_attach,
   flags = lsp_flags,
+  filetypes = { "aspnetcorerazor", "astro", "astro-markdown", "blade", "clojure", "django-html", "htmldjango", "edge",
+    "eelixir", "elixir", "ejs", "erb", "eruby", "gohtml", "haml", "handlebars", "hbs", "html", "html-eex", "heex",
+    "jade", "leaf", "liquid", "markdown", "mdx", "mustache", "njk", "nunjucks", "php", "razor", "slim", "twig", "css",
+    "less", "postcss", "sass", "scss", "stylus", "sugarss", "javascript", "javascriptreact", "reason", "rescript",
+    "typescript", "typescriptreact", "vue", "svelte", "ruby" },
+  init_options = {
+    userLanguages = {
+      ruby = "php",
+    },
+  },
+  settings = {
+    tailwindCSS = {
+      experimental = {
+        classRegex = {
+          [[class= "([^"]*)]],
+          [[class: "([^"]*)]],
+          [[class= '([^']*)]],
+          [[class: '([^']*)]],
+          '~H""".*class="([^"]*)".*"""',
+          '~F""".*class="([^"]*)".*"""',
+        },
+      }
+    }
+  }
 }
 lspconfig.ansiblels.setup {
   on_attach = on_attach,

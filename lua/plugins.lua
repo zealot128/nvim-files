@@ -70,6 +70,7 @@ require("packer").startup(function(use)
       vim.g.copilot_no_tab_map = true
       vim.g.copilot_filetypes = {
         yaml = 1,
+        markdown = 1,
         ["yaml.ansible"] = 1
       }
       if vim.env.LOGNAME == "swi" then
@@ -325,6 +326,17 @@ require("packer").startup(function(use)
   use {
     "martineausimon/nvim-lilypond-suite",
     ft = { "lilypond", "ly" },
+  }
+
+  use {
+    "rhysd/vim-grammarous",
+    ft = { "markdown", "tex" },
+    commands = { "GrammarousToggle", "GrammarousCheck" },
+    config = function()
+      -- let g:grammarous#jar_url = 'https://www.languagetool.org/download/LanguageTool-5.9.zip'
+      vim.g.grammarous_jar_url = 'https://www.languagetool.org/download/LanguageTool-5.9.zip'
+      vim.g.grammarous_use_location_list = 1
+    end
   }
 
   if is_bootstrap then
