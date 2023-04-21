@@ -51,10 +51,10 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
 
 -- cnoreabbrev W w in lua:
-vim.api.nvim_exec(
-[[
-  cnoreabbrev W w
-]], false)
+-- vim.api.nvim_exec(
+-- [[
+--   cnoreabbrev W w
+-- ]], false)
 vim.api.nvim_exec(
 [[
   cnoreabbrev E e

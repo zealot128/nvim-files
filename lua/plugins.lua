@@ -49,7 +49,7 @@ require("packer").startup(function(use)
   use 'themercorp/themer.lua'
   use "mhartington/oceanic-next"
   use {
-    "jayden-chan/base46.nvim" ,
+    "jayden-chan/base46.nvim",
     config = function()
       --require("base46").load_theme { theme = "catppucin", base = "base46" }
       require("base46").load_theme { theme = "pasteldark", base = "base46" }
@@ -99,7 +99,7 @@ require("packer").startup(function(use)
     "tpope/vim-tbone",
     config = function()
       vim.keymap.set("v", "<leader>ty", ":Tyank<CR>", { desc = "tmux: Yank selection to clipboard" })
-      vim.keymap.set("n", "<leader>tp", ":Tput<CR>", {  desc = "tmux: Paste from clipboard" })
+      vim.keymap.set("n", "<leader>tp", ":Tput<CR>", { desc = "tmux: Paste from clipboard" })
     end,
   }
   use "tpope/vim-eunuch"
@@ -127,15 +127,14 @@ require("packer").startup(function(use)
     config = function()
       local colorizer = require "colorizer"
       colorizer.setup({ "*" }, {
-        RGB = true, -- #RGB hex codes
-        RRGGBB = true, -- #RRGGBB hex codes
-        names = false, -- "Name" codes like Blue
+        RGB = true,       -- #RGB hex codes
+        RRGGBB = true,    -- #RRGGBB hex codes
+        names = false,    -- "Name" codes like Blue
         RRGGBBAA = false, -- #RRGGBBAA hex codes
-        rgb_fn = true, -- CSS rgb() and rgba() functions
-        hsl_fn = true, -- CSS hsl() and hsla() functions
-        css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-        css_fn = false, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-
+        rgb_fn = true,    -- CSS rgb() and rgba() functions
+        hsl_fn = true,    -- CSS hsl() and hsla() functions
+        css = true,       -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+        css_fn = false,   -- Enable all CSS *functions*: rgb_fn, hsl_fn
         -- Available modes: foreground, background
         mode = "background", -- Set the display mode.
       })
@@ -198,7 +197,7 @@ require("packer").startup(function(use)
   use {
     "kyazdani42/nvim-web-devicons",
   }
-  use {  -- Add indentation guides even on blank lines
+  use { -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
     config = function()
       -- require("indent_blankline").setup {
@@ -226,6 +225,15 @@ require("packer").startup(function(use)
     end,
   }
   use {
+    "chrisgrieser/nvim-early-retirement",
+    config = function()
+      require("early-retirement").setup({
+        retirementAgeMins = 2 * 24 * 60,
+        notificationOnAutoClose = false,
+      })
+    end,
+  }
+  use {
     "feline-nvim/feline.nvim",
     after = "nvim-web-devicons",
     config = function()
@@ -240,7 +248,8 @@ require("packer").startup(function(use)
       -- use bundle exec rubocop
       vim.g.neoformat_ruby_rubocop = {
         exe = 'bundle',
-        args = { 'exec rubocop --auto-correct', '--stdin', '"%:p"', '2>/dev/null', '|', 'sed "1,/^====================$/d"' },
+        args = { 'exec rubocop --auto-correct', '--stdin', '"%:p"', '2>/dev/null', '|',
+          'sed "1,/^====================$/d"' },
         stdin = 1,
         stderr = 1
       }
@@ -265,19 +274,27 @@ require("packer").startup(function(use)
     config = function()
       require "plugins.telescope"
       require("telescope").load_extension "undo"
-      vim.keymap.set("n", "<C-f>", require("telescope.builtin").find_files, { noremap = true, silent = true, desc = "Telescope: Find files" })
-      vim.keymap.set("n", "<C-p>", require("telescope.builtin").find_files, { noremap = true, silent = true, desc = "Telescope: Find Files" })
+      vim.keymap.set("n", "<C-f>", require("telescope.builtin").find_files,
+      { noremap = true, silent = true, desc = "Telescope: Find files" })
+      vim.keymap.set("n", "<C-p>", require("telescope.builtin").find_files,
+      { noremap = true, silent = true, desc = "Telescope: Find Files" })
       vim.keymap.set("n", "<C-b>", require('telescope.builtin').buffers, { desc = "Telescope: Find buffers" })
 
       vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = 'Telescope: [S]earch [F]iles' })
       vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = 'Telescope: [S]earch [H]elp' })
-      vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = 'Telescope: [S]earch current [W]ord' })
-      vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = 'Telescope: [S]earch by [G]rep' })
-      vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = 'Telescope: [S]earch [D]iagnostics' })
+      vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string,
+      { desc = 'Telescope: [S]earch current [W]ord' })
+      vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep,
+      { desc = 'Telescope: [S]earch by [G]rep' })
+      vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics,
+      { desc = 'Telescope: [S]earch [D]iagnostics' })
       -- See `:help telescope.builtin`
-      vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = 'Telescope: [?] Find recently opened files' })
-      vim.keymap.set('n', '<leader>km', require('telescope.builtin').keymaps, { desc = 'Telescope keymaps: [K]ey[m]aps [?]' })
-      vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = 'Telescope: [ ] Find existing buffers' })
+      vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles,
+      { desc = 'Telescope: [?] Find recently opened files' })
+      vim.keymap.set('n', '<leader>km', require('telescope.builtin').keymaps,
+      { desc = 'Telescope keymaps: [K]ey[m]aps [?]' })
+      vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers,
+      { desc = 'Telescope: [ ] Find existing buffers' })
       vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
       vim.keymap.set('n', '<leader>/', function()
         -- You can pass additional configuration to telescope to change theme, layout, etc.
@@ -318,10 +335,11 @@ require("packer").startup(function(use)
     "airblade/vim-rooter",
     config = function()
       vim.g.rooter_patterns =
-        { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", "ansible.cfg", "*.gemspec" }
+      { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", "ansible.cfg", "*.gemspec" }
       -- Start :Rooter to change Root dir between projects
       vim.g.rooter_manual_only = 1
-      vim.keymap.set("n", "<leader>cd", ":Rooter<CR>", { noremap = true, silent = true, desc = "Activate Rooter - move Root directory with buffer" })
+      vim.keymap.set("n", "<leader>cd", ":Rooter<CR>",
+      { noremap = true, silent = true, desc = "Activate Rooter - move Root directory with buffer" })
     end,
   }
   use {
@@ -391,8 +409,7 @@ function RandomTheme()
   -- vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF]]
   -- vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD]]
 end
+
 vim.api.nvim_create_user_command('RandomTheme', 'lua RandomTheme()', {})
 -- RandomTheme()
 -- vim.cmd('colorscheme themer_catppuccin')
-
-
