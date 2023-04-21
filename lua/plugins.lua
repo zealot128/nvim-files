@@ -19,9 +19,17 @@ require("packer").startup(function(use)
       require "plugins.lspconfig"
     end,
   }
+  use {
+    "SmiteshP/nvim-navbuddy",
+    requires = {
+        "neovim/nvim-lspconfig",
+        "SmiteshP/nvim-navic",
+        "MunifTanjim/nui.nvim",
+    }
+  }
 
   -- Good: duskfox OceanicNext icy
- -- <Theme> ----------------------------------------
+  -- <Theme> ----------------------------------------
   -- use {
   --   "RRethy/nvim-base16",
   --   config = function()
