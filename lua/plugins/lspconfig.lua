@@ -108,12 +108,12 @@ lspconfig.volar.setup {
 lspconfig.solargraph.setup {
   on_attach = on_attach,
   flags = lsp_flags,
-  cmd = { "bundle", "exec", "ruby-lsp" }
+  cmd = { "bundle", "exec", "solargraph", "stdio" }
 }
 lspconfig.ruby_ls.setup {
   on_attach = on_attach,
   flags = lsp_flags,
-  cmd = { "bundle", "exec", "solargraph", "stdio" }
+  cmd = { "bundle", "exec", "ruby-lsp" }
   --cmd = { "bundle", "exec", "solargraph", "stdio" }
 }
 lspconfig.graphql.setup {

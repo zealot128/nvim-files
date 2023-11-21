@@ -49,6 +49,13 @@ require("lazy").setup({
   },
 
   -- file explorer
+  {
+    "tpope/vim-tbone",
+    config = function()
+      vim.keymap.set("v", "<leader>ty", ":Tyank<CR>", { desc = "tmux: Yank selection to clipboard" })
+      vim.keymap.set("n", "<leader>tp", ":Tput<CR>", { desc = "tmux: Paste from clipboard" })
+    end,
+  },
   "tpope/vim-vinegar",
   {
     "prichrd/netrw.nvim",

@@ -372,8 +372,8 @@ local components = {
     },
     {},
     {
-      comps.lsp.progress,
-      comps.lsp.active,
+      -- comps.lsp.progress,
+      -- comps.lsp.active,
       comps.branch,
       comps.divider,
       comps.mode.color,
