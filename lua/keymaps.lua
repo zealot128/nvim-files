@@ -55,10 +55,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 -- [[
 --   cnoreabbrev W w
 -- ]], false)
-vim.api.nvim_exec(
-[[
-  cnoreabbrev E e
-]], false)
+vim.cmd.cnoreabbrev('E', 'e')
 
 
 -- check if vim.lsp.buf.formatting is available
