@@ -1,7 +1,7 @@
 return {
   {
     "sbdchd/neoformat",
-    cmd = "Neogformat",
+    cmd = "Neoformat",
     init = function()
       -- vim.g.neoformat_verbose = 1
       --bundle exec rubocop

@@ -5,6 +5,17 @@ return {
     "neovim/nvim-lspconfig",
     dependencies = {},
     config = function()
+
+      -- slow lsp on 0.10 https://github.com/neovim/neovim/issues/23725
+      -- keep watch of https://github.com/neovim/neovim/issues/23291
+      local ok, wf = pcall(require, "vim.lsp._watchfiles")
+      if ok then
+        -- disable lsp watcher. Too slow on linux
+        wf._watchfunc = function()
+          return function() end
+        end
+      end
+
       require("mason").setup()
       require("mason-lspconfig").setup()
 
@@ -46,6 +57,9 @@ return {
         -- vim.keymap.set('n', '<space>n', require("nvim-navbuddy").open, bufopts)
       end
 
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+
       local lsp_flags = {
         -- This is the default in Nvim 0.7+
         debounce_text_changes = 150,
@@ -56,7 +70,7 @@ return {
 
       lspconfig.lua_ls.setup {
         on_attach = on_attach,
-        -- capabilities = capabilities,
+        capabilities = capabilities,
         flags = lsp_flags,
 
         settings = {
@@ -77,11 +91,6 @@ return {
             },
           },
         },
-      }
-      lspconfig.ansiblels.setup {
-        single_file_support = true,
-        on_attach = on_attach,
-        flags = lsp_flags,
       }
 
       local util = require 'lspconfig.util'
@@ -110,6 +119,7 @@ return {
       lspconfig.volar.setup {
         filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
         on_attach = on_attach,
+        capabilities = capabilities,
         flags = lsp_flags,
         on_new_config = function(new_config, new_root_dir)
           new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
@@ -117,6 +127,7 @@ return {
       }
       lspconfig.solargraph.setup {
         on_attach = on_attach,
+        capabilities = capabilities,
         flags = lsp_flags,
         cmd = { "bundle", "exec", "solargraph", "stdio" }
       }
@@ -128,6 +139,7 @@ return {
       --}
       lspconfig.graphql.setup {
         on_attach = on_attach,
+        capabilities = capabilities,
         flags = lsp_flags,
       }
       --lspconfig.grammarly.setup {
@@ -181,6 +193,7 @@ return {
       lspconfig.ansiblels.setup {
         on_attach = on_attach,
         flags = lsp_flags,
+        capabilities = capabilities,
         settings = {
           ansible = {
             ansible = {

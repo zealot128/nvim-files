@@ -64,11 +64,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 local wildignore = vim.api.nvim_get_option_value("wildignore", {})
-wildignore = wildignore .. ",*.exe,*.swp,.DS_Store,*~,*.o"
-wildignore = wildignore .. ",*/tmp/*,*.so,*.swp,*.zip"
-wildignore = wildignore .. ",*/log/*"
-wildignore = wildignore .. ",*/coverage/*"
-wildignore = wildignore .. ",*/public/system/*" -- Rails images
+wildignore = "*.exe,*.swp,.DS_Store,*~,*.o,*/tmp/*,*.so,*.swp,*.zip" .. ",*/log/*" ..
+  ",*/coverage/*,*/public/system/*"
 vim.api.nvim_set_option_value("wildignore", wildignore, {})
 
 vim.api.nvim_exec([[autocmd CmdwinEnter * nnoremap <buffer> <esc> :q<cr>]], true)

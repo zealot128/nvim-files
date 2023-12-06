@@ -62,4 +62,3 @@ vim.cmd.cnoreabbrev('E', 'e')
 if vim.lsp.buf.formatting then
   vim.keymap.set('n', '<leader>ff', vim.lsp.buf.formatting, { desc = '[LSP]: Format buffer' })
 end
-

@@ -22,7 +22,6 @@ vim.opt.wildignorecase = true
 -- set signcolumn=yes
 vim.opt.signcolumn = "yes"
 
-
 vim.opt.mouse = ""
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -39,5 +38,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("plugins")
-require("keymaps")
-require("autocommands")
+require("components.keymaps")
+require("components.autocommands")
+require("components.text-objects")

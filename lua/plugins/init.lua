@@ -61,11 +61,4 @@ return {
   --   "martineausimon/nvim-lilypond-suite",
   --   ft = { "lilypond", "ly" },
   -- },
-  {
-    "jayden-chan/base46.nvim",
-    config = function()
-      --require("base46").load_theme { theme = "catppucin", base = "base46" }
-      require("base46").load_theme { theme = "pasteldark", base = "base46" }
-    end,
-  }
 }
