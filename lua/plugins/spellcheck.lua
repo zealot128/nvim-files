@@ -1,0 +1,5 @@
+return {
+  {
+    "dpelle/vim-LanguageTool"
+  }
+}

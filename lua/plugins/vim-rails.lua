@@ -1,7 +1,7 @@
 return {
   {
     "tpope/vim-rails",
-    ft = { "ruby" },
+    ft = { "ruby", "slim", "haml", "eruby" },
     init = function()
       vim.api.nvim_exec([[command! Rroutes Einitializer]], true)
       vim.api.nvim_exec([[command! Eroutes Einitializer]], true)

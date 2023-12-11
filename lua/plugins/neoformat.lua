@@ -12,6 +12,10 @@ return {
         stdin = 1,
         stderr = 1
       }
+
+      vim.g.neoformat_enabled_eruby = { "erbformat", "htmlbeautifier" }
+      vim.g.neoformat_eruby_erbformat = { exe = "erb-format", args = { "--stdin" }, stdin = 1 }
+      vim.g.neoformat_eruby_htmlbeautifier = { exe = "htmlbeautifier", args = { "--keep-blank-lines", '1' }, stdin = 1 }
     end,
   }
 }
