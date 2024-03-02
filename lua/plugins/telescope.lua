@@ -11,6 +11,7 @@ return {
     },
     config = function()
       local telescope = require "telescope"
+      require('telescope').load_extension('fzf')
       telescope.setup {
         pickers = {
           find_files = {
@@ -18,8 +19,10 @@ return {
             previewer = false,
           },
           buffers = {
+            ignore_current_buffer = true,
             disable_devicons = true,
             previewer = false,
+            sort_lastused = true,
           },
           colorscheme = {
             enable_preview = true,

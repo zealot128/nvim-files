@@ -158,38 +158,39 @@ return {
       --    }
       --  }
       --}
-      --lspconfig.terraformls.setup {
-      --  on_attach = on_attach,
-      --  flags = lsp_flags,
-      --}
-      --lspconfig.tailwindcss.setup {
-      --  on_attach = on_attach,
-      --  flags = lsp_flags,
-      --  filetypes = { "aspnetcorerazor", "astro", "astro-markdown", "blade", "clojure", "django-html", "htmldjango", "edge",
-      --    "eelixir", "elixir", "ejs", "erb", "eruby", "gohtml", "haml", "handlebars", "hbs", "html", "html-eex", "heex",
-      --    "jade", "leaf", "liquid", "markdown", "mdx", "mustache", "njk", "nunjucks", "php", "razor", "slim", "twig", "css",
-      --    "less", "postcss", "sass", "scss", "stylus", "sugarss", "javascript", "javascriptreact", "reason", "rescript",
-      --    "typescript", "typescriptreact", "vue", "svelte", "ruby" },
-      --  init_options = {
-      --    userLanguages = {
-      --      ruby = "php",
-      --    },
-      --  },
-      --  settings = {
-      --    tailwindCSS = {
-      --      experimental = {
-      --        classRegex = {
-      --          [[class= "([^"]*)]],
-      --          [[class: "([^"]*)]],
-      --          [[class= '([^']*)]],
-      --          [[class: '([^']*)]],
-      --          '~H""".*class="([^"]*)".*"""',
-      --          '~F""".*class="([^"]*)".*"""',
-      --        },
-      --      }
-      --    }
-      --  }
-      --}
+      --
+      lspconfig.terraformls.setup {
+       on_attach = on_attach,
+       flags = lsp_flags,
+      }
+      lspconfig.tailwindcss.setup {
+       on_attach = on_attach,
+       flags = lsp_flags,
+       filetypes = { "aspnetcorerazor", "astro", "astro-markdown", "blade", "clojure", "django-html", "htmldjango", "edge",
+         "eelixir", "elixir", "ejs", "erb", "eruby", "gohtml", "haml", "handlebars", "hbs", "html", "html-eex", "heex",
+         "jade", "leaf", "liquid", "markdown", "mdx", "mustache", "njk", "nunjucks", "php", "razor", "slim", "twig", "css",
+         "less", "postcss", "sass", "scss", "stylus", "sugarss", "javascript", "javascriptreact", "reason", "rescript",
+         "typescript", "typescriptreact", "vue", "svelte", "ruby" },
+       init_options = {
+         userLanguages = {
+           ruby = "php",
+         },
+       },
+       settings = {
+         tailwindCSS = {
+           experimental = {
+             classRegex = {
+               [[class= "([^"]*)]],
+               [[class: "([^"]*)]],
+               [[class= '([^']*)]],
+               [[class: '([^']*)]],
+               '~H""".*class="([^"]*)".*"""',
+               '~F""".*class="([^"]*)".*"""',
+             },
+           }
+         }
+       }
+      }
       lspconfig.ansiblels.setup {
         on_attach = on_attach,
         flags = lsp_flags,
@@ -198,11 +199,6 @@ return {
           ansible = {
             ansible = {
               path = "ansible",
-            },
-            ansibleLint = {
-              enabled = true,
-              path = "ansiblelint",
-              args = {},
             },
           },
         },

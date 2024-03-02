@@ -2,6 +2,7 @@ return {
   {
     "tpope/vim-rails",
     ft = { "ruby", "slim", "haml", "eruby" },
+    cmd = { "Einitializer", "Econtroller", "Emodel" },
     init = function()
       vim.api.nvim_exec([[command! Rroutes Einitializer]], true)
       vim.api.nvim_exec([[command! Eroutes Einitializer]], true)

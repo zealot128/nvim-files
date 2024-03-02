@@ -23,7 +23,7 @@ local function CopyRspecForLine()
    local file = vim.fn.expand "%"
    local testcommand = "R " .. file .. ":" .. row
    print(testcommand)
-   local tmuxcmd = "echo '" .. testcommand .. "' | tmux loadb -"
+   local tmuxcmd = "echo '" .. testcommand .. "\r\n' | tmux loadb -"
    local _error = vim.fn.system(tmuxcmd)
    return testcommand
 end
