@@ -1,22 +1,28 @@
 return {
   {
     "lewis6991/gitsigns.nvim",
-    lazy = true,
     config = function()
       local gitsigns = require "gitsigns"
       gitsigns.setup {
-        keymaps = {
-          -- Default keymap options
-          buffer = true,
-          noremap = true,
-          ["n ]c"] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'" },
-          ["n [c"] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'" },
-          ["n <leader>hs"] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-          ["n <leader>hu"] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-          ["n <leader>hr"] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-          ["n <leader>hp"] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-          ["n <leader>hb"] = '<cmd>lua require"gitsigns".blame_line()<CR>',
-        },
+        on_attach = function(bufnr)
+          local gs = require("gitsigns")
+          local function map(mode, l, r, opts)
+            opts = opts or {}
+            opts.buffer = bufnr
+            vim.keymap.set(mode, l, r, opts)
+          end
+          map('n', ']c', function()
+            if vim.wo.diff then return ']c' end
+            vim.schedule(function() gs.next_hunk() end)
+            return '<Ignore>'
+          end, {expr=true})
+
+          map('n', '[c', function()
+            if vim.wo.diff then return '[c' end
+            vim.schedule(function() gs.prev_hunk() end)
+            return '<Ignore>'
+          end, {expr=true})
+        end,
         numhl = false,
 
         sign_priority = 5,
