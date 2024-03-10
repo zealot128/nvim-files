@@ -202,6 +202,22 @@ return {
          }
        }
       }
+      lspconfig.grammarly.setup {
+       on_attach = on_attach,
+       flags = lsp_flags,
+       settings = {
+         grammarly = {
+           config = {
+             documentDialect = "british",
+             documentDomain = "mail"
+           },
+           userWords = {
+             "brifter",
+             "brifters"
+           }
+         }
+       }
+      }
       lspconfig.ansiblels.setup {
         on_attach = on_attach,
         flags = lsp_flags,
