@@ -19,6 +19,23 @@ return {
     end
   },
   {
+    'numToStr/Comment.nvim', -- "gc" to comment visual regions/lines
+    config = function()
+      require('Comment').setup()
+    end,
+  },
+  -- {
+  --   'JoosepAlviste/nvim-ts-context-commentstring',
+  --   config = function()
+  --     require('ts_context_commentstring').setup {
+  --       enable_autocmd = true,
+  --       languages = {
+  --         typescript = '// %s',
+  --       },
+  --     }
+  --   end,
+  -- },
+  {
     "nvim-treesitter/nvim-treesitter",
     event = "BufRead",
     config = function()
@@ -54,9 +71,6 @@ return {
         },
         matchup = {
           enable = false,
-        },
-        context_commentstring = {
-          enable = true
         },
         textobjects = {
           select = {
