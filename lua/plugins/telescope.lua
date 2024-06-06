@@ -4,14 +4,13 @@ return {
     dependencies = {
       {
         "nvim-telescope/telescope-fzf-native.nvim",
-        build = "make",
+        build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' 
       },
       { "nvim-lua/plenary.nvim" },
       { "debugloop/telescope-undo.nvim" },
     },
     config = function()
       local telescope = require "telescope"
-      require('telescope').load_extension('fzf')
       telescope.setup {
         pickers = {
           find_files = {
@@ -80,7 +79,8 @@ return {
           undo = {},
         },
       }
-      require("telescope").load_extension "undo"
+      require('telescope').load_extension('fzf')
+      require("telescope").load_extension("undo")
       vim.keymap.set("n", "<C-f>", require("telescope.builtin").find_files,
         { noremap = true, silent = true, desc = "Telescope: Find files" })
       vim.keymap.set("n", "<C-p>", require("telescope.builtin").find_files,
