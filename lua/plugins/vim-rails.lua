@@ -14,6 +14,11 @@ return {
           ["command"] = "projections",
         },
 
+        -- from a packs/* back into main app
+        ["../../app/models/*.rb"] = {
+          ["command"] = "gmodel",
+        },
+
         ["app/services/*.rb"] = {
           ["command"] = "service",
           ["affinity"] = "model",
@@ -46,6 +51,29 @@ return {
             "end",
           }
         },
+        ["app/jobs/*_job.rb"] = {
+          ["affinity"] = "model",
+          ["template"] = {
+            "class {camelcase|capitalize|colons}Job < ApplicationJob",
+            "  queue_as :default",
+            "",
+            "  def perform",
+            "  end",
+            "end"
+          },
+          ["type"] = "job"
+        },
+        ["app/jobs/cronjob/*_job.rb"] = {
+          ["template"] = {
+            "class Cronjob::{camelcase|capitalize|colons}Job < Cronjob",
+            "  cronjob cron: \"everay day at 1am\"",
+            "",
+            "  def perform",
+            "  end",
+            "end"
+          },
+          ["type"] = "cronjob"
+        },
         ["app/components/*.rb"] = {
           ["command"] = "component",
           ["test"] = "spec/components/%s.rb",
@@ -73,12 +101,6 @@ return {
           ["related"] = "app/models/%s.rb",
           ["template"] = "ActiveAdmin.register %S do\n\n  # form do |f|\n   # f.inputs do\n   # end\n   # f.actions\n  # end\n\n  #menu parent= '', label= ''\n\n  # index do\n  #default_actions\n  # end\n\nend\n",
         },
-        ["app/javascript/packs/*.js"] = {
-          ["command"] = "pack",
-        },
-        ["app/javascript/*.js"] = {
-          ["command"] = "js",
-        },
         ["app/javascript/*.vue"] = {
           ["command"] = "vue",
           ["template"] = "<template lang='pug'>\n  div\n</template>\n<script>\n\nexport default {\n  computed= {}\n};\n</script>\n<style lang='scss'>\n</style>",
@@ -99,11 +121,6 @@ return {
           ["template"] = "require 'spec_helper'\n\nfeature '%h' do\n\nend",
         },
       }
-
-
-
-
-
       require "plugins.vim-rails"
     end,
   },
