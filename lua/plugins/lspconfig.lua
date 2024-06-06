@@ -8,11 +8,13 @@ return {
 
       -- slow lsp on 0.10 https://github.com/neovim/neovim/issues/23725
       -- keep watch of https://github.com/neovim/neovim/issues/23291
-      local ok, wf = pcall(require, "vim.lsp._watchfiles")
-      if ok then
-        -- disable lsp watcher. Too slow on linux
-        wf._watchfunc = function()
-          return function() end
+      if false then
+        local ok, wf = pcall(require, "vim.lsp._watchfiles")
+        if ok then
+          -- disable lsp watcher. Too slow on linux
+          wf._watchfunc = function()
+            return function() end
+          end
         end
       end
 
@@ -121,6 +123,8 @@ return {
         on_attach = on_attach,
         capabilities = capabilities,
         flags = lsp_flags,
+        log_level = vim.lsp.protocol.MessageType.Log,
+        cmd = { "./node_modules/.bin/vue-language-server", "--stdio" },
         on_new_config = function(new_config, new_root_dir)
           new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
         end,
