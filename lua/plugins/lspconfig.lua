@@ -3,7 +3,14 @@ return {
   { "williamboman/mason-lspconfig.nvim" },
   {
     "neovim/nvim-lspconfig",
-    dependencies = {},
+    dependencies = {
+      {
+        "j-hui/fidget.nvim",
+        opts = {
+          -- options
+        },
+      }
+    },
     config = function()
 
       -- slow lsp on 0.10 https://github.com/neovim/neovim/issues/23725
