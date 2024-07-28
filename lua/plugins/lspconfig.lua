@@ -12,7 +12,6 @@ return {
       }
     },
     config = function()
-
       -- slow lsp on 0.10 https://github.com/neovim/neovim/issues/23725
       -- keep watch of https://github.com/neovim/neovim/issues/23291
       if false then
@@ -130,24 +129,39 @@ return {
         on_attach = on_attach,
         capabilities = capabilities,
         flags = lsp_flags,
-        log_level = vim.lsp.protocol.MessageType.Log,
-        cmd = { "./node_modules/.bin/vue-language-server", "--stdio" },
+        -- log_level = vim.lsp.protocol.MessageType.Log,
+        -- cmd = { "./node_modules/.bin/vue-language-server", "--stdio" },
         on_new_config = function(new_config, new_root_dir)
+          local project_dir = util.find_node_modules_ancestor(new_root_dir)
+          if project_dir then
+            local bin = util.path.join(project_dir, 'node_modules', '.bin', 'vue-language-server')
+            if util.path.exists(bin) then
+              print("setting project specific vue-language-server path")
+              new_config.cmd = { bin, '--stdio' }
+            end
+          end
           new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
         end,
       }
-      lspconfig.solargraph.setup {
+      -- lspconfig.solargraph.setup {
+      --   on_attach = on_attach,
+      --   capabilities = capabilities,
+      --   flags = lsp_flags,
+      --   cmd = { "bundle", "exec", "solargraph", "stdio" }
+      -- }
+      lspconfig.ruby_ls.setup {
         on_attach = on_attach,
-        capabilities = capabilities,
         flags = lsp_flags,
-        cmd = { "bundle", "exec", "solargraph", "stdio" }
+        init_options = {
+          formatter = 'auto',
+          experimentalFeaturesEnabled = true
+        },
       }
-      --lspconfig.ruby_ls.setup {
-      --  on_attach = on_attach,
-      --  flags = lsp_flags,
-      --  cmd = { "bundle", "exec", "ruby-lsp" }
-      --  --cmd = { "bundle", "exec", "solargraph", "stdio" }
-      --}
+      lspconfig.stimulus_ls.setup {
+        on_attach = on_attach,
+        flags = lsp_flags,
+        filetypes = { "html", "ruby", "eruby", "blade", "php", "slim" }
+      }
       lspconfig.graphql.setup {
         on_attach = on_attach,
         capabilities = capabilities,
@@ -171,52 +185,52 @@ return {
       --}
       --
       lspconfig.terraformls.setup {
-       on_attach = on_attach,
-       flags = lsp_flags,
+        on_attach = on_attach,
+        flags = lsp_flags,
       }
       lspconfig.tailwindcss.setup {
-       on_attach = on_attach,
-       flags = lsp_flags,
-       filetypes = { "aspnetcorerazor", "astro", "astro-markdown", "blade", "clojure", "django-html", "htmldjango", "edge",
-         "eelixir", "elixir", "ejs", "erb", "eruby", "gohtml", "haml", "handlebars", "hbs", "html", "html-eex", "heex",
-         "jade", "leaf", "liquid", "markdown", "mdx", "mustache", "njk", "nunjucks", "php", "razor", "slim", "twig", "css",
-         "less", "postcss", "sass", "scss", "stylus", "sugarss", "javascript", "javascriptreact", "reason", "rescript",
-         "typescript", "typescriptreact", "vue", "svelte", "ruby" },
-       init_options = {
-         userLanguages = {
-           ruby = "php",
-         },
-       },
-       settings = {
-         tailwindCSS = {
-           experimental = {
-             classRegex = {
-               [[class= "([^"]*)]],
-               [[class: "([^"]*)]],
-               [[class= '([^']*)]],
-               [[class: '([^']*)]],
-               '~H""".*class="([^"]*)".*"""',
-               '~F""".*class="([^"]*)".*"""',
-             },
-           }
-         }
-       }
+        on_attach = on_attach,
+        flags = lsp_flags,
+        filetypes = { "aspnetcorerazor", "astro", "astro-markdown", "blade", "clojure", "django-html", "htmldjango", "edge",
+          "eelixir", "elixir", "ejs", "erb", "eruby", "gohtml", "haml", "handlebars", "hbs", "html", "html-eex", "heex",
+          "jade", "leaf", "liquid", "markdown", "mdx", "mustache", "njk", "nunjucks", "php", "razor", "slim", "twig", "css",
+          "less", "postcss", "sass", "scss", "stylus", "sugarss", "javascript", "javascriptreact", "reason", "rescript",
+          "typescript", "typescriptreact", "vue", "svelte", "ruby" },
+        init_options = {
+          userLanguages = {
+            ruby = "php",
+          },
+        },
+        settings = {
+          tailwindCSS = {
+            experimental = {
+              classRegex = {
+                [[class= "([^"]*)]],
+                [[class: "([^"]*)]],
+                [[class= '([^']*)]],
+                [[class: '([^']*)]],
+                '~H""".*class="([^"]*)".*"""',
+                '~F""".*class="([^"]*)".*"""',
+              },
+            }
+          }
+        }
       }
       lspconfig.grammarly.setup {
-       on_attach = on_attach,
-       flags = lsp_flags,
-       settings = {
-         grammarly = {
-           config = {
-             documentDialect = "british",
-             documentDomain = "mail"
-           },
-           userWords = {
-             "brifter",
-             "brifters"
-           }
-         }
-       }
+        on_attach = on_attach,
+        flags = lsp_flags,
+        settings = {
+          grammarly = {
+            config = {
+              documentDialect = "british",
+              documentDomain = "mail"
+            },
+            userWords = {
+              "brifter",
+              "brifters"
+            }
+          }
+        }
       }
       lspconfig.ansiblels.setup {
         on_attach = on_attach,
