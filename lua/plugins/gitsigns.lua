@@ -27,11 +27,12 @@ return {
 
         sign_priority = 5,
         signs = {
-          add = { hl = "DiffAdd", text = "│", numhl = "GitSignsAddNr" },
-          change = { hl = "DiffChange", text = "│", numhl = "GitSignsChangeNr" },
-          changedelete = { hl = "DiffChange", text = "~", numhl = "GitSignsChangeNr" },
-          delete = { hl = "DiffDelete", text = "_", numhl = "GitSignsDeleteNr" },
-          topdelete = { hl = "DiffDelete", text = "‾", numhl = "GitSignsDeleteNr" },
+          add          = { text = '┃' },
+          change       = { text = '┃' },
+          delete       = { text = '_' },
+          topdelete    = { text = '‾' },
+          changedelete = { text = '~' },
+          untracked    = { text = '┆' },
         },
 
         status_formatter = nil,  --default
