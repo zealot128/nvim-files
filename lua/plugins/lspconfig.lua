@@ -149,7 +149,7 @@ return {
       --   flags = lsp_flags,
       --   cmd = { "bundle", "exec", "solargraph", "stdio" }
       -- }
-      lspconfig.ruby_ls.setup {
+      lspconfig.ruby_lsp.setup {
         on_attach = on_attach,
         flags = lsp_flags,
         init_options = {
