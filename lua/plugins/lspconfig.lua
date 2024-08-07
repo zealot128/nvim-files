@@ -157,11 +157,11 @@ return {
           experimentalFeaturesEnabled = true
         },
       }
-      lspconfig.stimulus_ls.setup {
-        on_attach = on_attach,
-        flags = lsp_flags,
-        filetypes = { "html", "ruby", "eruby", "blade", "php", "slim" }
-      }
+      -- lspconfig.stimulus_ls.setup {
+      --   on_attach = on_attach,
+      --   flags = lsp_flags,
+      --   filetypes = { "html", "ruby", "eruby", "blade", "php", "slim" }
+      -- }
       lspconfig.graphql.setup {
         on_attach = on_attach,
         capabilities = capabilities,
