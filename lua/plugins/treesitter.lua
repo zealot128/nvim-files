@@ -41,17 +41,19 @@ return {
     config = function()
       require'nvim-treesitter.configs'.setup {
         ensure_installed = {
-          "dockerfile",
-          "comment",
-          "graphql",
           "bash",
+          "comment",
+          "dockerfile",
+          "graphql",
           "hcl",
           "javascript",
           "json",
           "lua",
           "markdown",
+          "markdown_inline",
           "ruby",
           "scss",
+          "sql",
           "typescript",
           "yaml",
         },
