@@ -9,7 +9,9 @@ return {
         ["yaml.ansible"] = 1
       }
       if vim.env.LOGNAME == "swi" then
-         vim.g.copilot_node_command = "/home/swi/.asdf/installs/nodejs/18.12.1/bin/node"
+        vim.g.copilot_node_command = "/home/swi/.asdf/installs/nodejs/18.12.1/bin/node"
+      elseif vim.env.LOGNAME == 'stefan' then
+        vim.g.copilot_node_command = "/Users/stefan/.asdf/installs/nodejs/20.8.1/bin/node"
       end
     end,
     config = function()
