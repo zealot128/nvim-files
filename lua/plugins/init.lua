@@ -132,7 +132,13 @@ return {
     config = function()
       require('render-markdown').setup({})
     end,
-  }
+  },
+  {
+		"mireq/large_file",
+		config = function()
+			require("large_file").setup()
+		end
+	},
   -- {
   --   "martineausimon/nvim-lilypond-suite",
   --   ft = { "lilypond", "ly" },
