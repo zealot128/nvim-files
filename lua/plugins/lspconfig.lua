@@ -222,7 +222,7 @@ return {
         on_attach = on_attach,
         flags = lsp_flags,
         init_options = {
-          -- formatter = 'rubocop',
+          formatter = 'rubocop',
           experimentalFeaturesEnabled = true
         },
       }
