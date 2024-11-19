@@ -49,6 +49,7 @@ return {
   },
   "chaoren/vim-wordmotion",
   "slim-template/vim-slim",
+  "isobit/vim-caddyfile",
   {
     "lmeijvogel/vim-yaml-helper",
     config = function()
