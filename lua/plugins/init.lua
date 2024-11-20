@@ -6,13 +6,14 @@ return {
       vim.keymap.set("n", "<leader>tp", ":Tput<CR>", { desc = "tmux: Paste from clipboard" })
     end,
   },
-  "tpope/vim-vinegar",
-  {
-    "prichrd/netrw.nvim",
-    config = function()
-      require("netrw").setup {}
-    end,
-  },
+  "stevearc/oil.nvim",
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+  config = function() 
+    vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+    require("oil").setup({
+      default_file_explorer = true,
+    })
+  end,
   "wsdjeg/vim-fetch",
   "tpope/vim-surround",
   {
@@ -27,13 +28,6 @@ return {
     config = function()
       vim.keymap.set("v", "<leader>ty", ":Tyank<CR>", { desc = "tmux: Yank selection to clipboard" })
       vim.keymap.set("n", "<leader>tp", ":Tput<CR>", { desc = "tmux: Paste from clipboard" })
-    end,
-  },
-  "tpope/vim-vinegar",
-  {
-    "prichrd/netrw.nvim",
-    config = function()
-      require("netrw").setup {}
     end,
   },
   "wsdjeg/vim-fetch",
@@ -126,14 +120,14 @@ return {
       vim.keymap.set("n", "<leader>dif", ":Gdiffsplit<CR>", { noremap = true, silent = true, desc = "Git: Diff split" })
     end
   },
-  {
-    'MeanderingProgrammer/markdown.nvim',
-    name = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    config = function()
-      require('render-markdown').setup({})
-    end,
-  },
+  -- {
+  --   'MeanderingProgrammer/markdown.nvim',
+  --   name = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
+  --   dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  --   config = function()
+  --     require('render-markdown').setup({})
+  --   end,
+  -- },
   {
 		"mireq/large_file",
 		config = function()
