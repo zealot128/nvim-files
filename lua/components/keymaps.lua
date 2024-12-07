@@ -8,14 +8,14 @@ vim.keymap.set('n', '<leader>fm', ':Neoformat<CR>')
 vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = '[LSP]: Open [C]ode [A]ction' })
 vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = '[LSP]: Rename item under cursor' })
 
-local function openDirOfFile()
-   local file = vim.fn.resolve(vim.fn.expand "%:h")
-   local cmd = ":e " .. file
-   print(cmd)
-
-   vim.cmd(cmd)
-end
-vim.keymap.set('n', '-', openDirOfFile, { desc = 'Open files directory' })
+-- local function openDirOfFile()
+--    local file = vim.fn.resolve(vim.fn.expand "%:h")
+--    local cmd = ":e " .. file
+--    print(cmd)
+--
+--    vim.cmd(cmd)
+-- end
+-- vim.keymap.set('n', '-', openDirOfFile, { desc = 'Open files directory' })
 
 
 local function CopyRspecForLine()
@@ -63,32 +63,4 @@ if vim.lsp.buf.formatting then
   vim.keymap.set('n', '<leader>ff', vim.lsp.buf.formatting, { desc = '[LSP]: Format buffer' })
 end
 
-
-
--- Sync clipboard between OS and Neovim.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
-vim.opt.clipboard = 'unnamedplus'
-
-local function paste()
-  return {
-    vim.fn.split(vim.fn.getreg '', '\n'),
-    vim.fn.getregtype '',
-  }
-end
-
-if os.getenv 'SSH_TTY' ~= nil then
-  vim.g.clipboard = {
-    name = 'OSC 52',
-    copy = {
-      ['+'] = require('vim.ui.clipboard.osc52').copy '+',
-      ['*'] = require('vim.ui.clipboard.osc52').copy '*',
-    },
-
-    paste = {
-      ['+'] = paste,
-      ['*'] = paste,
-    },
-  }
-end
 

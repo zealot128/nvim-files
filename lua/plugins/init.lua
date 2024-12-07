@@ -6,14 +6,17 @@ return {
       vim.keymap.set("n", "<leader>tp", ":Tput<CR>", { desc = "tmux: Paste from clipboard" })
     end,
   },
-  "stevearc/oil.nvim",
-  dependencies = { "nvim-tree/nvim-web-devicons" },
-  config = function() 
-    vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
-    require("oil").setup({
-      default_file_explorer = true,
-    })
-  end,
+  {
+    "stevearc/oil.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+      require("oil").setup({
+        default_file_explorer = true,
+        skip_confirm_for_simple_edits = true,
+      })
+    end,
+  },
   "wsdjeg/vim-fetch",
   "tpope/vim-surround",
   {
