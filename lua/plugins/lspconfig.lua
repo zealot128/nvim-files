@@ -194,23 +194,29 @@ return {
       --  on_attach = on_attach,
       --  flags = lsp_flags,
       --}
+      -- vim.lsp.set_log_level 'debug'
       lspconfig.volar.setup {
         filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
         on_attach = on_attach,
         capabilities = capabilities,
+         init_options = {
+           vue = {
+             hybridMode = true,
+           },
+         },
         flags = lsp_flags,
         -- log_level = vim.lsp.protocol.MessageType.Log,
         -- cmd = { "./node_modules/.bin/vue-language-server", "--stdio" },
-        on_new_config = function(new_config, new_root_dir)
-          local project_dir = util.find_node_modules_ancestor(new_root_dir)
-          if project_dir then
-            local bin = util.path.join(project_dir, 'node_modules', '.bin', 'vue-language-server')
-            if util.path.exists(bin) then
-              new_config.cmd = { bin, '--stdio' }
-            end
-          end
-          new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
-        end,
+        -- on_new_config = function(new_config, new_root_dir)
+        --   local project_dir = util.find_node_modules_ancestor(new_root_dir)
+        --   if project_dir then
+        --     local bin = util.path.join(project_dir, 'node_modules', '.bin', 'vue-language-server')
+        --     if util.path.exists(bin) then
+        --       new_config.cmd = { bin, '--stdio' }
+        --     end
+        --   end
+        --   -- new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
+        -- end,
       }
       -- lspconfig.solargraph.setup {
       --   on_attach = on_attach,

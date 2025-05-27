@@ -4,11 +4,11 @@ return {
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     cmd = "TSPlaygroundToggle",
   },
-  { -- Additional text objects via treesitter
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    event = "BufRead",
-  },
+  -- { -- Additional text objects via treesitter
+  --   'nvim-treesitter/nvim-treesitter-textobjects',
+  --   dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  --   event = "BufRead",
+  -- },
   {
     'ckolkey/ts-node-action',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
@@ -133,6 +133,13 @@ return {
         },
         -- filetype = "pug", -- if filetype does not agrees with parser name
         -- used_by = { "vue" }, -- additional filetypes that use this parser
+      }
+      parser_config.slim = {
+        install_info = {
+          url = "https://gitlab.com/theoreichel/tree-sitter-slim",
+          branch = "main",
+          files = { "src/parser.c", "src/scanner.c" },
+        }
       }
       require "plugins.treesitter"
     end,

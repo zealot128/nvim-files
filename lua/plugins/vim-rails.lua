@@ -124,4 +124,17 @@ return {
       require "plugins.vim-rails"
     end,
   },
+   {
+    "moguls753/rails-i18n-hover.nvim",
+    config = function()
+      require("rails-i18n-hover").setup({
+        goto_lang     = "de",
+        goto_file_keymap = "<leader>gt"
+      })
+    end,
+    ft = { "ruby", "slim", "haml", "eruby" },
+    dependencies = {
+      "nvim-neotest/nvim-nio",
+    },
+  },
 }

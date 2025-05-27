@@ -91,7 +91,6 @@ return {
     --ft = { "ruby" },
   },
   "chaoren/vim-wordmotion",
-  "slim-template/vim-slim",
   {
     "lmeijvogel/vim-yaml-helper",
     config = function()
