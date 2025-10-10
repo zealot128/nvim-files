@@ -194,6 +194,7 @@ return {
         flags = lsp_flags,
       })
       vim.lsp.enable("ts_ls")
+
       -- vim.lsp.set_log_level 'debug'
       vim.lsp.config("vue_ls", {
         filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
@@ -263,13 +264,11 @@ return {
           "jade", "leaf", "liquid", "markdown", "mdx", "mustache", "njk", "nunjucks", "php", "razor", "slim", "twig", "css",
           "less", "postcss", "sass", "scss", "stylus", "sugarss", "javascript", "javascriptreact", "reason", "rescript",
           "typescript", "typescriptreact", "vue", "svelte", "ruby" },
-        init_options = {
-          userLanguages = {
-            ruby = "php",
-          },
-        },
         settings = {
           tailwindCSS = {
+            includeLanguages = {
+              ruby = "php"
+            },
             experimental = {
               classRegex = {
                 [[class= "([^"]*)]],
