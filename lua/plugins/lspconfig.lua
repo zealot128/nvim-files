@@ -144,9 +144,7 @@ return {
       }
 
 
-      local lspconfig = require('lspconfig')
-
-      lspconfig.lua_ls.setup {
+      vim.lsp.config("lua_ls", {
         on_attach = on_attach,
         capabilities = capabilities,
         flags = lsp_flags,
@@ -169,7 +167,8 @@ return {
             },
           },
         },
-      }
+      })
+      vim.lsp.enable("lua_ls")
 
       local util = require 'lspconfig.util'
       local function get_typescript_server_path(root_dir)
@@ -190,23 +189,24 @@ return {
         end
       end
 
-      --lspconfig.tsserver.setup {
-      --  on_attach = on_attach,
-      --  flags = lsp_flags,
-      --}
+      vim.lsp.config("ts_ls", {
+        on_attach = on_attach,
+        flags = lsp_flags,
+      })
+      vim.lsp.enable("ts_ls")
       -- vim.lsp.set_log_level 'debug'
-      lspconfig.volar.setup {
+      vim.lsp.config("vue_ls", {
         filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
         on_attach = on_attach,
         capabilities = capabilities,
-         init_options = {
-           vue = {
-             hybridMode = true,
-           },
-         },
+        init_options = {
+          vue = {
+            hybridMode = true,
+          },
+        },
         flags = lsp_flags,
         -- log_level = vim.lsp.protocol.MessageType.Log,
-        -- cmd = { "./node_modules/.bin/vue-language-server", "--stdio" },
+        cmd = { "./node_modules/.bin/vue-language-server", "--stdio" },
         -- on_new_config = function(new_config, new_root_dir)
         --   local project_dir = util.find_node_modules_ancestor(new_root_dir)
         --   if project_dir then
@@ -217,36 +217,45 @@ return {
         --   end
         --   -- new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
         -- end,
-      }
+      })
       -- lspconfig.solargraph.setup {
       --   on_attach = on_attach,
       --   capabilities = capabilities,
       --   flags = lsp_flags,
       --   cmd = { "bundle", "exec", "solargraph", "stdio" }
       -- }
-      lspconfig.ruby_lsp.setup {
+      -- capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+      vim.lsp.enable("vue_ls")
+
+      vim.lsp.config("ruby_lsp", {
         on_attach = on_attach,
         flags = lsp_flags,
+        capabilities = capabilities,
         init_options = {
           formatter = 'rubocop',
           experimentalFeaturesEnabled = true
         },
-      }
-      -- lspconfig.stimulus_ls.setup {
-      --   on_attach = on_attach,
-      --   flags = lsp_flags,
-      --   filetypes = { "html", "ruby", "eruby", "blade", "php", "slim" }
-      -- }
-      lspconfig.graphql.setup {
+      })
+      vim.lsp.enable("ruby_lsp")
+
+      vim.lsp.config("stimulus_ls", {
+        on_attach = on_attach,
+        flags = lsp_flags,
+        filetypes = { "html", "ruby", "eruby", "blade", "php", "slim" }
+      })
+      vim.lsp.config('graphql', {
         on_attach = on_attach,
         capabilities = capabilities,
         flags = lsp_flags,
-      }
-      lspconfig.terraformls.setup {
+      })
+      vim.lsp.enable("graphql")
+
+      vim.lsp.config('terraformls', {
         on_attach = on_attach,
         flags = lsp_flags,
-      }
-      lspconfig.tailwindcss.setup {
+      })
+      vim.lsp.enable("terraformls")
+      vim.lsp.config('tailwindcss', {
         on_attach = on_attach,
         flags = lsp_flags,
         filetypes = { "aspnetcorerazor", "astro", "astro-markdown", "blade", "clojure", "django-html", "htmldjango", "edge",
@@ -273,24 +282,26 @@ return {
             }
           }
         }
-      }
-      -- lspconfig.grammarly.setup {
-      --   on_attach = on_attach,
-      --   flags = lsp_flags,
-      --   settings = {
-      --     grammarly = {
-      --       config = {
-      --         documentDialect = "british",
-      --         documentDomain = "mail"
-      --       },
-      --       userWords = {
-      --         "brifter",
-      --         "brifters"
-      --       }
-      --     }
-      --   }
-      -- }
-      lspconfig.ansiblels.setup {
+      })
+      vim.lsp.enable("tailwindcss")
+
+      vim.lsp.config("grammarly", {
+        on_attach = on_attach,
+        flags = lsp_flags,
+        settings = {
+          grammarly = {
+            config = {
+              documentDialect = "british",
+              documentDomain = "mail"
+            },
+            userWords = {
+              "brifter",
+              "brifters"
+            }
+          }
+        }
+      })
+      vim.lsp.config("ansiblels", {
         on_attach = on_attach,
         flags = lsp_flags,
         capabilities = capabilities,
@@ -299,16 +310,23 @@ return {
             ansible = {
               path = "ansible",
             },
+            validation = {
+              enabled = false,
+              lint = {
+                enabled = false
+              }
+            }
           },
         },
-      }
+      })
+      vim.lsp.enable("ansiblels")
 
-      -- lspconfig["css-lsp"].setup{
-      --   on_attach = on_attach,
-      --   flags = lsp_flags,
-      -- }
+      vim.lsp.config("css-lsp", {
+        on_attach = on_attach,
+        flags = lsp_flags,
+      })
       --
-      -- will be called like: (command, { bufnr = bufnr, client_id = client_id }) 
+      -- will be called like: (command, { bufnr = bufnr, client_id = client_id })
       --
       -- vim.lsp.commands["rubyLsp.runTest"] = function(arg)
       --   -- run bundle exec rspec PATH:LINE
