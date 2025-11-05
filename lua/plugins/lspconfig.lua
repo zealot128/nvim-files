@@ -233,7 +233,12 @@ return {
         capabilities = capabilities,
         init_options = {
           formatter = 'rubocop',
-          experimentalFeaturesEnabled = true
+          experimentalFeaturesEnabled = true,
+          addonSettings = {
+            ["Ruby LSP Rails"] = {
+              enablePendingMigrationsPrompt = false,
+            },
+          }
         },
       })
       vim.lsp.enable("ruby_lsp")
